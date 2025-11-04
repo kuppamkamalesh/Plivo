@@ -1,70 +1,159 @@
-# Getting Started with Create React App
+# n8n + LLM Text Analyzer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a **React.js web application** integrated with an **n8n
+workflow** for automated text analysis using a Large Language Model
+(LLM). Users can input a paragraph and choose between **Summary** and
+**Sentiment** modes to analyze the text.
 
-## Available Scripts
+------------------------------------------------------------------------
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+-   Two analysis modes: **Summary** and **Sentiment**
+-   Real-time result rendering
+-   Robust error handling and loading indicators
+-   Environment variable-based URL configuration
+-   Clean, minimal design without external styling frameworks
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+------------------------------------------------------------------------
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🧠 Workflow Description
 
-### `npm test`
+1.  The user enters text and selects the analysis mode.
+2.  The React app sends a POST request with the text and mode to the n8n
+    webhook.
+3.  The n8n workflow processes the text using a conditional logic node
+    to determine the mode.
+4.  The LLM (Gemini) receives the prompt and returns
+    the analysis result.
+5.  The result is sent back through the **Respond to Webhook** node.
+6.  The React frontend displays the analysis result neatly on the
+    screen.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+------------------------------------------------------------------------
 
-### `npm run build`
+## 🛠️ Tools and Technologies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-   **React.js** --- Frontend development framework.
+-   **Axios** --- For HTTP POST requests to the backend.
+-   **n8n** --- Automation tool connecting APIs and workflows.
+-   **LLM API** --- For text summarization and sentiment analysis.
+-   **Environment Variables** --- Used to store the webhook securely.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+------------------------------------------------------------------------
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## ⚙️ Setup Instructions
 
-### `npm run eject`
+### 1. Clone the repository
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+``` bash
+git clone https://github.com/your-username/n8n-text-analyzer.git
+cd n8n-text-analyzer
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 2. Install dependencies
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+``` bash
+npm install
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 3. Create a `.env` file
 
-## Learn More
+Add your production n8n webhook URL:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+``` env
+REACT_APP_n8nLink=https://kamaleshk.app.n8n.cloud/webhook/text-analysis
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 4. Run the app
 
-### Code Splitting
+``` bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Access it locally at `http://localhost:3000`.
 
-### Analyzing the Bundle Size
+------------------------------------------------------------------------
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🌍 Deployment Notes
 
-### Making a Progressive Web App
+-   Add the same `REACT_APP_n8nLink` variable in your hosting provider's
+    **Environment Variables** section.
+-   Supported platforms: **Netlify**.
+-   Ensure the n8n webhook is public and active.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+------------------------------------------------------------------------
 
-### Advanced Configuration
+## 📈 Example n8n Workflow
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+-   **Trigger:** Webhook (POST)
+-   **Nodes:**
+    -   Function node (for conditional logic)
+    -   LLM (e.g., OpenAI node for summary/sentiment generation)
+    -   Respond to Webhook (returns `{ analysis: "..." }`)
 
-### Deployment
+------------------------------------------------------------------------
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 🧩 Architecture Summary
 
-### `npm run build` fails to minify
+-   **Frontend (React):**
+    -   Handles text input, mode selection, and result display.
+    -   Communicates with the backend using Axios.
+-   **Backend (n8n Workflow):**
+    -   Processes input text.
+    -   Integrates LLM for text processing.
+    -   Sends formatted response back.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+------------------------------------------------------------------------
+
+## 📘 Developer Documentation
+
+### Overview
+
+The **n8n + LLM Text Analyzer** demonstrates seamless integration
+between frontend and workflow automation. It provides a lightweight,
+efficient way to automate AI-based text interpretation directly from a
+web interface.
+
+### Setup Workflow in n8n
+
+1.  Create a **Webhook Trigger** node (POST method).
+2.  Add a **Switch** or **IF** node to branch logic by `mode` value.
+3.  Connect each branch to an **LLM Node** (e.g., OpenAI, Gemini, or
+    Claude) with mode-specific prompts.
+4.  Merge the outputs and send the final text via **Respond to
+    Webhook**.
+
+### Key Environment Variable
+
+  Variable            Description
+  ------------------- -----------------------------------------------
+  REACT_APP_n8nLink   The webhook URL endpoint of your n8n workflow
+
+### Troubleshooting
+
+  ----------------------------------------------------------------------------------
+  Issue                         Cause                 Solution
+  ----------------------------- --------------------- ------------------------------
+  `Cannot POST /undefined`      `.env` not loaded     Restart the server or check
+                                                      the variable name
+
+  `No response from workflow`   n8n webhook inactive  Activate workflow and verify
+                                or incorrect URL      endpoint
+
+  Timeout                       n8n server slow or    Increase timeout in Axios or
+                                blocked               optimize workflow
+  ----------------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+## 🧑‍💻 Author
+
+**Kuppam Kamalesh**\
+Frontend Developer \| React.js \| n8n
+
+------------------------------------------------------------------------
+
+## 📝 License
+
+MIT License © 2024
